@@ -129,7 +129,7 @@ app.get('/vehiculos', (req, res) => {
 
 /* Obtener un solo vehiculo por su placa */
 app.get('/vehiculo-placa', (req, res) => {
-    const filtro = { placa: req.query.placa }
+    const filtro = { placa: req.query.placa.toLowerCase() }
     VehiculoModelo.find(
         filtro,
         (error, documento) => {
@@ -146,8 +146,8 @@ app.get('/vehiculo-placa', (req, res) => {
 app.post('/agregar-vehiculo', (req, res) => {
 
     const vehiculo = new VehiculoModelo({
-        marca: req.body.marca,
-        placa: req.body.placa,
+        marca: req.body.marca.toLowerCase(),
+        placa: req.body.placa.toLowerCase(),
         modelo: req.body.modelo
     });
 
@@ -163,10 +163,10 @@ app.post('/agregar-vehiculo', (req, res) => {
 /* Editar vehiculo por placa */
 app.put('/editar-vehiculo-placa', (req, res) => {
     const datoNuevo = {
-        marca: req.body.marca,
+        marca: req.body.marca.toLowerCase(),
         modelo: req.body.modelo
     }
-    const filtro = {placa: req.query.placa}
+    const filtro = {placa: req.query.placa.toLowerCase()}
     VehiculoModelo.findOneAndUpdate(filtro, datoNuevo, (error, documento) => {
         if(error) {
             res.send('Error al editar el vehiculo');
@@ -187,7 +187,7 @@ app.put('/editar-vehiculo-placa', (req, res) => {
 
 /* Eliminar vehiculo */
 app.delete('/eliminar-vehiculo', (req, res) => {
-    const filtro = { placa: req.body.placa }
+    const filtro = { placa: req.body.placa.toLowerCase() }
     VehiculoModelo.deleteOne(
         filtro,
         (error, documento) => {
